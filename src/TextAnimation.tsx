@@ -7,6 +7,7 @@ import {
   useVideoConfig,
 } from 'remotion';
 import {z} from 'zod';
+import {loadFont} from '@remotion/google-fonts/PottaOne';
 
 export const textAnimationSchema = z.object({
   textSettings: z.object({
@@ -22,10 +23,13 @@ export const textAnimationSchema = z.object({
   animationSettings: z.object({
     speed: z.number().min(1).max(20).describe('アニメーション速度（1=最速、20=最遅）'),
     direction: z.enum(['bottom-to-top', 'top-to-bottom', 'left-to-right', 'right-to-left']).describe('アニメーション方向'),
+    rotation: z.number().min(0).max(720).describe('回転角度（0=回転なし、360=1回転、720=2回転）'),
   }).describe('アニメーション設定'),
 });
 
 export type TextAnimationProps = z.infer<typeof textAnimationSchema>;
+
+const {fontFamily} = loadFont();
 
 export const TextAnimation: React.FC<TextAnimationProps> = ({
   textSettings,
@@ -37,7 +41,7 @@ export const TextAnimation: React.FC<TextAnimationProps> = ({
 
   const {text, fontSize, textColor} = textSettings;
   const {backgroundColor} = backgroundSettings;
-  const {speed, direction} = animationSettings;
+  const {speed, direction, rotation} = animationSettings;
   const characters = text.split('');
 
   return (
@@ -46,9 +50,9 @@ export const TextAnimation: React.FC<TextAnimationProps> = ({
         backgroundColor,
         justifyContent: 'center',
         alignItems: 'center',
-        fontFamily: 'Arial Black, sans-serif',
+        fontFamily,
         fontSize,
-        fontWeight: 900,
+        fontWeight: 400,
         color: textColor,
       }}
     >
@@ -104,12 +108,19 @@ export const TextAnimation: React.FC<TextAnimationProps> = ({
             }
           );
 
+          // 回転角度
+          const rotate = interpolate(
+            bounce,
+            [0, 1],
+            [0, rotation]
+          );
+
           return (
             <span
               key={index}
               style={{
                 display: 'inline-block',
-                transform: `translate(${translateX}px, ${translateY}px)`,
+                transform: `translate(${translateX}px, ${translateY}px) rotate(${rotate}deg)`,
                 opacity,
                 textShadow: '3px 3px 6px rgba(0, 0, 0, 0.5)',
               }}

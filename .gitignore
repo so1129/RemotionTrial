@@ -4,14 +4,25 @@ node_modules/
 # Build output
 dist/
 out/
+build/
+.next/
+target/
+__pycache__/
+*.pyc
 
 # Environment variables
 .env
 .env.local
+.env.*.local
+*.key
+*.pem
+credentials.json
 
 # OS files
 .DS_Store
 Thumbs.db
+*.swp
+*~
 
 # IDE
 .vscode/
@@ -24,3 +35,14 @@ Thumbs.db
 
 # Remotion
 .remotion/
+
+# 動画編集：派生物とレンダー
+assets_derived/
+renders/
+cache/
+
+# 大容量ファイル（LFS未登録のもの）
+*.zip
+*.tar.gz
+*.rar
+*.7z

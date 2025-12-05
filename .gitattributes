@@ -1,0 +1,75 @@
+# ==========================================
+# Git Attributes: 改行とファイル属性の正規化
+# ==========================================
+
+# デフォルト: 改行を自動正規化（CRLF→LF）
+* text=auto
+
+# テキストファイルは明示的にLF
+*.md text eol=lf
+*.txt text eol=lf
+*.sh text eol=lf
+*.bash text eol=lf
+*.json text eol=lf
+*.js text eol=lf
+*.ts text eol=lf
+*.jsx text eol=lf
+*.tsx text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.html text eol=lf
+*.xml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# バイナリファイルは変換しない
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar binary
+*.gz binary
+*.7z binary
+*.rar binary
+
+# ==========================================
+# Git LFS: 大容量ファイルの追跡
+# ==========================================
+
+# 動画素材
+*.mov filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.avi filter=lfs diff=lfs merge=lfs -text
+*.mxf filter=lfs diff=lfs merge=lfs -text
+*.r3d filter=lfs diff=lfs merge=lfs -text
+
+# 音声素材
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.aif filter=lfs diff=lfs merge=lfs -text
+*.aiff filter=lfs diff=lfs merge=lfs -text
+*.flac filter=lfs diff=lfs merge=lfs -text
+
+# 高解像度画像
+*.exr filter=lfs diff=lfs merge=lfs -text
+*.dpx filter=lfs diff=lfs merge=lfs -text
+*.tif filter=lfs diff=lfs merge=lfs -text
+*.tiff filter=lfs diff=lfs merge=lfs -text
+
+# ==========================================
+# 差分表示の最適化
+# ==========================================
+
+# 画像ファイルは差分表示しない（バイナリ扱い）
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.gif -text
+
+# Lockfile のマージ戦略（注意: 依存関係の競合が見えなくなる可能性）
+# Remotionプロジェクトでは通常package.jsonを共有するため、merge=oursを使用
+# チーム開発時は慎重に運用すること
+package-lock.json merge=ours
+yarn.lock merge=ours

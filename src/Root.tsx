@@ -24,6 +24,7 @@ export const RemotionRoot: React.FC = () => {
           animationSettings: {
             speed: 5,
             direction: 'bottom-to-top',
+            rotation: 360,
           },
         }}
       />
